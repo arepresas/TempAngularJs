@@ -7,7 +7,7 @@ TempListController.$inject = ['$scope', '$filter', 'GetTempList', 'GetLastTemp']
 function TempListController(scope, filter, GetTempList, GetLastTemp) {
 
     // TempList graph
-    GetTempList.query({}, function (content) {
+    scope.tempList = GetTempList.query({}, function (content) {
         initList(content);
     });
 
@@ -44,8 +44,8 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
         tempList.forEach(function(temp) {
             rows.push({
                 "c": [{
-                    // "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yyyy')
-                    "v": new Date(temp.dateTime.seconds * 1000)
+                    "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yyyy hh:mm')
+                    // "v": new Date(temp.dateTime.seconds * 1000)
                 }, {
                     "v": temp.temperature,
                     "f": temp.temperature.toString()
@@ -59,7 +59,7 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
             "cols": [{
                 id: "date",
                 label: "Date",
-                type: "date"
+                type: "string"
             }, {
                 id: "temperature",
                 label: "Temperature",
