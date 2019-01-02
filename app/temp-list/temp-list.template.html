@@ -1,1 +1,15 @@
-<strong>TempList = </strong>{{tempList}}
+<div google-chart chart="lastTempChartObject" style="height:130px; width:100%;"></div>
+
+<div google-chart chart="lastHumidityChartObject" style="height:130px; width:100%;"></div>
+
+<div google-chart chart="tempListChartObject" agc-on-select="hideSeries(selectedItem)" style="height:450px; width:100%;"></div>
+
+<ul>
+    <li ng-repeat="temp in tempList">
+        <p class="layout-align-center-center"><strong>DATA</strong></p>
+        <p>Id: {{temp.id}}</p>
+        <p>Temperature: {{temp.temperature}}</p>
+        <p>Humidity: {{temp.humidity}}</p>
+        <p>Date: {{temp.dateTime.seconds * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+    </li>
+</ul>
