@@ -44,7 +44,7 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
         tempList.forEach(function(temp) {
             rows.push({
                 "c": [{
-                    "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yyyy hh:mm')
+                    "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yy hh:mm')
                     // "v": new Date(temp.dateTime.seconds * 1000)
                 }, {
                     "v": temp.temperature,
@@ -94,16 +94,11 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
     }
 
     // LastTemp and LastHumidity graph
-    GetLastTemp.query({}, function (content) {
-        scope.lastTempChartObject.data = [
-            ['Label', 'Value'],
-            ['Temperature', content.temperature]
-        ];
-        scope.lastHumidityChartObject.data = [
-            ['Label', 'Value'],
-            ['Humidity', content.humidity]
-        ];
-    });
+    scope.lastTemp = GetLastTemp.query();
+
+    scope.getBlockSizeForGauge = function() {
+        return document.getElementById("gauge-container").offsetWidth;
+    };
 
     // Properties for LastTemp graph
     scope.lastTempChartObject = {};

@@ -5,7 +5,8 @@ angular.module('TempServer', [
   'ngRoute',
   'ngResource',
   'ngMaterial',
-  'googlechart'
+  'googlechart',
+  'angularjs-gauge',
   // 'ngMessages',
   // 'myApp.view1',
   // 'myApp.view2',
