@@ -1,0 +1,24 @@
+.wrapper {
+    width: 100%;
+}
+
+/* Clock Module */
+.Clock {
+    font-family: 'Oswald', sans-serif;
+    /*width: 1024px;*/
+    /*margin: 0 auto;*/
+}
+
+.Clock-time {
+    width: 100%;
+    font-weight:bold;
+    /*font-size: 270px;*/
+    text-align: center;
+}
+
+.Clock-date {
+    width: 100%;
+    font-weight:bold;
+    /*font-size: 120px;*/
+    text-align: center;
+}

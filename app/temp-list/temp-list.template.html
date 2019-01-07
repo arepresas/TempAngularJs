@@ -1,84 +1,32 @@
-<div flex ng-cloak>
-    <md-grid-list
-            md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
-            md-row-height-gt-md="1:1" md-row-height="4:3"
-            md-gutter="8px" md-gutter-gt-sm="4px" >
-
-        <md-grid-tile ng-repeat="tile in vm.tiles"
-                      md-rowspan="{{tile.span.row}}"
-                      md-colspan="{{tile.span.col}}"
-                      md-colspan-sm="1"
-                      md-colspan-xs="1"
-                      ng-class="tile.background" >
-            <md-icon md-svg-icon="{{tile.icon}}"></md-icon>
-            <md-grid-tile-footer><h3>{{tile.title}}</h3></md-grid-tile-footer>
-        </md-grid-tile>
-    </md-grid-list>
-</div>
-
 <div class="container-fluid">
 
-    <div class="row">
-        <div class="col-md">
-            <p class="md-headline layout-align-center-center">Temperature</p>
+    <div class="row justify-content-center">
+        <div class="col-sd">
+            <p class="md-headline text-center">Temperature</p>
             <ng-gauge type="arch" thick="15" min="0" max="40" size=150
                       foreground-color="{{lastTemp.temperature < 15 ? '#3333FF' : '#FF0005'}}"
                       fraction-size="1" value=lastTemp.temperature cap="round" label=""
                       append=" °C"></ng-gauge>
         </div>
-        <div class="col-md">
-            <p class="md-headline" style="align-content: center">Humidity</p>
+        <div class="col-sd offset-md-1">
+            <p class="md-headline text-center">Humidity</p>
             <ng-gauge type="arch" thick="15" min="0" max="100" size=150
                       foreground-color="{{lastTemp.humidity < 40 ? '#FF0005' : '#3333FF'}}"
                       value=lastTemp.humidity cap="round" label=""
                       append=" %"></ng-gauge>
         </div>
+        <div class="col-sd offset-md-1 Clock">
+            <p class="md-headline text-center">Date</p>
+            <div class="Clock-time">
+                {{lastTemp.dateTime | date:"HH:mm:ss" }}
+            </div>
+            <div class="Clock-date">
+                {{lastTemp.dateTime | date:"EEEE dd/MM/yyyy" }}
+            </div>
+        </div>
     </div>
-    <div class="row" google-chart chart="tempListChartObject" agc-on-select="hideSeries(selectedItem)" style="height:450px; width:100%;"></div>
-
+    <div class="row justify-content-center" google-chart chart="tempListChartObject"
+         agc-on-select="hideSeries(selectedItem)" style="height:450px; width:100%;">
     </div>
 
-
-
-    <div class="row">
-        <md-card class="col-1" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-            <md-card-title id="gauge-container">
-                <md-card-title-media>
-                    <p class="md-headline">Temperature</p>
-                    <ng-gauge type="arch" thick="15" min="0" max="40" size="{{getBlockSizeForGauge()}}"
-                              foreground-color="{{lastTemp.temperature < 15 ? '#3333FF' : '#FF0005'}}"
-                              fraction-size="1" value=lastTemp.temperature cap="round" label=""
-                              append=" °C"></ng-gauge>
-                </md-card-title-media>
-            </md-card-title>
-        </md-card>
-
-        <md-card class="col-1" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-            <md-card-title>
-                <md-card-title-media>
-                    <p class="md-headline">Humidity</p>
-                    <ng-gauge type="arch" thick="15" min="0" max="100" size="{{getBlockSizeForGauge()}}"
-                              foreground-color="{{lastTemp.humidity < 40 ? '#FF0005' : '#3333FF'}}"
-                              value=lastTemp.humidity cap="round" label=""
-                              append=" %"></ng-gauge>
-                </md-card-title-media>
-            </md-card-title>
-        </md-card>
-
-        <!--<div class="col-2" google-chart chart="lastTempChartObject" style="height:130px; width:100%;"></div>-->
-        <!--<div class="col-3" google-chart chart="lastHumidityChartObject" style="height:130px; width:100%;"></div>-->
-        <div class="col-9" google-chart chart="tempListChartObject" agc-on-select="hideSeries(selectedItem)" style="height:450px; width:100%;"></div>
-
-    </div>
-    <div class="row">
-        <ul>
-            <li ng-repeat="temp in tempList">
-                <p class="layout-align-center-center"><strong>DATA</strong></p>
-                <p>Id: {{temp.id}}</p>
-                <p>Temperature: {{temp.temperature}}</p>
-                <p>Humidity: {{temp.humidity}}</p>
-                <p>Date: {{temp.dateTime.seconds * 1000 | date:'dd/MM/yy HH:mm:ss'}}</p>
-            </li>
-        </ul>
-    </div>
 </div>

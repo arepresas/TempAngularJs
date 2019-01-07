@@ -35,6 +35,10 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
                 scope.tempListChartObject.view.columns[col] = col;
                 scope.tempListChartObject.options.colors[col - 1] = scope.tempListChartObject.options.defaultColors[col - 1];
             }
+        } else {
+            scope.lastTemp.dateTime = new Date(scope.tempListChartObject.data.rows[selectedItem.row].c[0].seconds * 1000);
+            scope.lastTemp.temperature = scope.tempListChartObject.data.rows[selectedItem.row].c[1].v;
+            scope.lastTemp.humidity = scope.tempListChartObject.data.rows[selectedItem.row].c[2].v;
         }
     }
 
@@ -44,8 +48,8 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
         tempList.forEach(function(temp) {
             rows.push({
                 "c": [{
-                    "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yy hh:mm')
-                    // "v": new Date(temp.dateTime.seconds * 1000)
+                    "v": filter('date')(temp.dateTime.seconds * 1000, 'dd/MM/yy hh:mm'),
+                    "seconds": temp.dateTime.seconds
                 }, {
                     "v": temp.temperature,
                     "f": temp.temperature.toString()
@@ -94,44 +98,7 @@ function TempListController(scope, filter, GetTempList, GetLastTemp) {
     }
 
     // LastTemp and LastHumidity graph
-    scope.lastTemp = GetLastTemp.query();
-
-    scope.getBlockSizeForGauge = function() {
-        return document.getElementById("gauge-container").offsetWidth;
-    };
-
-    // Properties for LastTemp graph
-    scope.lastTempChartObject = {};
-    scope.lastTempChartObject.type = "Gauge";
-
-    // Methods for LastTemp graph
-    scope.lastTempChartObject.options = {
-        width: 400,
-        height: 120,
-        blueFrom: 0,
-        blueTo: 5,
-        yellowFrom: 25,
-        yellowTo: 35,
-        redFrom: 35,
-        redTo: 50,
-        minorTicks: 2
-    };
-
-    // Properties for LastHumidity graph
-    scope.lastHumidityChartObject = {};
-    scope.lastHumidityChartObject.type = "Gauge";
-
-    // Methods for LastHumidity graph
-    scope.lastHumidityChartObject.options = {
-        width: 400,
-        height: 120,
-        redFrom: 0,
-        redTo: 30,
-        blueFrom: 75,
-        blueTo: 100,
-        minorTicks: 5
-    };
-
-
-
+    scope.lastTemp = GetLastTemp.query({}, function (content) {
+        content.dateTime = new Date(content.dateTime.seconds * 1000);
+    });
 }
